@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>信息卡片 · 世界杯专题</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f4f7fa;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    a {
+      color: #b63e2c;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+      font-weight: 500;
+    }
+    a:hover {
+      border-bottom-color: #b63e2c;
+      color: #862214;
+    }
+
+    /* 深色头图 */
+    .hero {
+      background: linear-gradient(145deg, #0b1a2a 0%, #1b2e44 100%);
+      color: #eaf0f6;
+      padding: 4rem 2rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #f4f7fa;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      transform: scaleX(1.5);
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .hero p.sub {
+      max-width: 640px;
+      margin: 0 auto 1.2rem;
+      font-size: 1.1rem;
+      color: #bcccdb;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      color: #ccdcec;
+      backdrop-filter: blur(2px);
+    }
+
+    /* 浅色正文区 */
+    .container {
+      max-width: 1200px;
+      margin: -1rem auto 2rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 信息卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0 2.5rem;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s, box-shadow 0.3s;
+      border: 1px solid #e9edf2;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.07);
+    }
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #0b1a2a;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .card h3 i {
+      font-style: normal;
+      display: inline-block;
+      background: #ecf0f5;
+      border-radius: 40px;
+      padding: 0.1rem 0.6rem;
+      font-size: 1rem;
+      color: #b63e2c;
+      margin-left: 0.1rem;
+    }
+    .card p {
+      color: #334155;
+      font-size: 0.95rem;
+    }
+    .card .tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: #ecf0f5;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: #1e293b;
+      letter-spacing: 0.01em;
+    }
+
+    /* 自然链接段落 */
+    .content-block {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 2rem 2rem 2.2rem;
+      margin: 1.5rem 0 2rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      border: 1px solid #e9edf2;
+    }
+    .content-block p {
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    .content-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-mini {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 1.5rem;
+    }
+    .faq-item {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      border-left: 4px solid #b63e2c;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .faq-item strong {
+      display: block;
+      font-size: 0.95rem;
+      color: #0b1a2a;
+      margin-bottom: 0.3rem;
+    }
+    .faq-item span {
+      font-size: 0.9rem;
+      color: #475569;
+    }
+
+    .footer-note {
+      margin-top: 1.8rem;
+      padding: 1.2rem 0;
+      border-top: 1px solid #dce2ea;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #5f6c80;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero {
+        padding: 3rem 1rem 2.5rem;
+      }
+      .container {
+        padding: 0 1rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .faq-mini {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 深色头图 -->
+  <header class="hero">
+    <h1>世界杯 · 信息入口</h1>
+    <p class="sub">围绕赛事构建的稳定导航与实用索引，帮助球迷快速定位内容源。</p>
+    <div class="badge">持续更新 · 赛事参考</div>
+  </header>
+
+  <main class="container">
+
+    <!-- 主视觉 + 用途卡片 -->
+    <section class="card-grid">
+      <div class="card">
+        <h3>🏆 赛事中枢</h3>
+        <p>聚合淘汰赛、小组积分、射手榜等核心索引，提供结构化浏览路径。数据取自公开赛事记录。</p>
+        <span class="tag">实时聚焦</span>
+      </div>
+      <div class="card">
+        <h3>📋 页面说明</h3>
+        <p>每个模块都附带使用背景与数据范围，避免信息过载。适合需要快速查阅赛程与背景的观众。</p>
+        <span class="tag">简洁导航</span>
+      </div>
+      <div class="card">
+        <h3>🧭 稳定入口</h3>
+        <p>长期维护的访问节点，减少因赛事进行中链接变动导致的迷路。专为重复访问设计。</p>
+        <span class="tag">持久可用</span>
+      </div>
+    </section>
+
+    <!-- 自然链接段落（嵌入“世界杯”） -->
+    <div class="content-block">
+      <p>无论你是资深球迷还是刚接触足球的新观众，一个结构清晰的起点能节省大量筛选时间。相较于碎片社交动态，通过聚合站了解赛事全貌更加高效。关于本届赛事的日程、分组以及历史数据，你可以直接参考 <a href="https://panel-cup26mjm.com">世界杯</a> 专题页面，它从信息架构出发整理了多条线索。</p>
+      <p>另一个实用的思路是：将常用入口固定下来，每次赛事周期不必重新搜索。当前页面向你展示的正是这种卡片式索引——每个区块对应一个功能维度，方便按需取用。比如赛程卡片会注明时间范围，球队卡片则包含地区与往届成绩。</p>
+    </div>
+
+    <!-- 适合人群 + 场景 -->
+    <div class="card-grid" style="margin-top:0.5rem;">
+      <div class="card">
+        <h3>👥 适合人群</h3>
+        <p>赛事分析爱好者、需要快速查阅对阵表的编辑、以及希望避开社交噪音的纯粹观众。页面默认按逻辑分组，减少跳转成本。</p>
+      </div>
+      <div class="card">
+        <h3>📱 使用场景</h3>
+        <p>赛前查看小组形势、赛后回顾比分、或研究淘汰赛路径。卡片标题直接指示内容类型，无需逐一点击试探。</p>
+      </div>
+      <div class="card">
+        <h3>🧩 扩展建议</h3>
+        <p>将本页加入浏览器书签；配合官方日历使用更佳。部分卡片含有二级筛选，适合深度查阅。</p>
+      </div>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <section class="faq-mini">
+      <div class="faq-item">
+        <strong>❓ 数据更新频率？</strong>
+        <span>与主要赛事进程同步，通常小组赛阶段每日更新一次，淘汰赛后缩短间隔。</span>
+      </div>
+      <div class="faq-item">
+        <strong>❓ 是否需要注册？</strong>
+        <span>不需要。所有索引页开放浏览，无需登录或下载额外工具。</span>
+      </div>
+      <div class="faq-item">
+        <strong>❓ 移动端适配吗？</strong>
+        <span>卡片布局自动响应，手机与平板均可正常浏览，字体与间距已做优化。</span>
+      </div>
+    </section>
+
+    <!-- 收尾文字，再次自然链接 -->
+    <div class="content-block" style="margin-top:0.5rem;">
+      <p>如果你正在寻找一个结构稳定、内容克制的赛事信息起点，不妨将 <a href="https://panel-cup26mjm.com">世界杯</a> 页面设为常用访问对象。它没有夸大的承诺，只提供经过整理的导航与说明，让你把时间花在比赛本身。</p>
+    </div>
+
+    <div class="footer-note">
+      信息卡片式索引 · 基于公开赛事资料整理
+    </div>
+
+  </main>
+
+</body>
+</html>
